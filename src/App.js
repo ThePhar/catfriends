@@ -14,12 +14,20 @@ class App extends React.Component {
         };
     }
 
+    onSearchChange = (event) => {
+        this.setState({ searchfield: event.target.value });
+    };
+
     render() {
+        const filteredCats = this.state.cats.filter(cat => {
+            return cat.name.toLowerCase().includes(this.state.searchfield.toLowerCase());
+        });
+
         return (
             <div className='tc'>
                 <h1>CatFriends</h1>
-                <SearchBox />
-                <CardList cats={this.state.cats} />
+                <SearchBox searchChange={this.onSearchChange} />
+                <CardList cats={filteredCats} />
             </div>
         );
     }

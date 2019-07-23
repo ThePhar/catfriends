@@ -58,6 +58,12 @@ export const cats = [
       name: 'Clementina DuBuque',
       username: 'Moriah.Stanton',
       email: 'Rey.Padberg@karina.biz'
+    },
+    {
+      id: 11,
+      name: 'Zach Parks',
+      username: 'ThePharfetched',
+      email: 'Zach@alliware.com'
     }
   ];
   
