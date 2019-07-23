@@ -1,20 +1,20 @@
 import React from 'react';
 
-import CardList from './CardList';
-import SearchBox from './SearchBox';
-import Scroll from './Scroll';
+import CardList from '../components/CardList';
+import SearchBox from '../components/SearchBox';
+import Scroll from '../components/Scroll';
 
 class App extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             cats: [],
-            searchfield: ''
+            searchField: ''
         };
     }
 
     onSearchChange = (event) => {
-        this.setState({ searchfield: event.target.value });
+        this.setState({ searchField: event.target.value });
     };
 
     componentDidMount() {
@@ -24,8 +24,9 @@ class App extends React.Component {
     }
 
     render() {
-        const filteredCats = this.state.cats.filter(cat => {
-            return cat.name.toLowerCase().includes(this.state.searchfield.toLowerCase());
+        const { cats, searchField } = this.state;
+        const filteredCats = cats.filter(cat => {
+            return cat.name.toLowerCase().includes(searchField.toLowerCase());
         });
 
         return (
