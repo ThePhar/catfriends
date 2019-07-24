@@ -1,22 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { setSearchField } from "../actions";
 
 import ErrorBoundary from './ErrorBoundary';
 import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll';
 
+const mapStateToProps = (state) => ({
+    searchField: state.searchField
+});
+const mapDispatchToProps = (dispatch) => ({
+    onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+});
+
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            cats: [],
-            searchField: ''
+            cats: []
         };
     }
-
-    onSearchChange = (event) => {
-        this.setState({ searchField: event.target.value });
-    };
 
     componentDidMount() {
         fetch('https://jsonplaceholder.typicode.com/users')
@@ -25,7 +30,8 @@ class App extends React.Component {
     }
 
     render() {
-        const { cats, searchField } = this.state;
+        const { cats } = this.state;
+        const { searchField, onSearchChange } = this.props;
         const filteredCats = cats.filter(cat => {
             return cat.name.toLowerCase().includes(searchField.toLowerCase());
         });
@@ -33,7 +39,7 @@ class App extends React.Component {
         return (
             <div className='tc'>
                 <h1 className='f1'>~ CatFriends ~</h1>
-                <SearchBox searchChange={this.onSearchChange} />
+                <SearchBox searchChange={onSearchChange} />
                 <Scroll>
                     <ErrorBoundary>
                         <CardList cats={filteredCats} />
@@ -44,4 +50,4 @@ class App extends React.Component {
     }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
